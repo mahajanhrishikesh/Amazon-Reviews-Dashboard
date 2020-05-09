@@ -1,20 +1,4 @@
 {% extends "layout.html" %}
 {% block content %}
-	{% for product in prods %}
-	<article class="media content-section">
-	  <div class="media-body">
-	    <div class="article-metadata">
-	      <a class="mr-2" href="#">{{ product['main_cat'] }}</a>
-	      <small class="text-muted">{{ product['date'] }}</small>
-	    </div>
-	    <h2><a class="article-title" href="/home/{{product['asin']}}">{{ product['title'] }}</a></h2>
-	    {% if product['image'] %}
-		<img src="{{product['image'][0]}}" height="100" width="100">
-		{% else %}
-			<small>No Images</small>
-		{% endif %}
-	    <p class="article-content">{{ product['price'] }}</p>
-	  </div>
-	</article>
-	{% endfor %}
+	<h1>Home</h1>
 {% endblock content %}
