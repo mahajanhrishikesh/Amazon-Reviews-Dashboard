@@ -32,8 +32,13 @@
 	        </div>
 	        <!-- Navbar Right Side -->
 	        <div class="navbar-nav">
-	          <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-	          <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+	          	{% if session['is_active'] %}
+	        		<a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
+	        		<a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+	        	{% else %}
+	          		<a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+	          		<a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+	          	{% endif %}
 	        </div>
 	      </div>
 	    </div>
@@ -42,7 +47,7 @@
 	
 	<main role="main" class="container">
 	  <div class="row">
-	    <div class="col-md-8">
+	    <div class="col-md-12">
 	    	{% with messages = get_flashed_messages(with_categories=true) %}
 	    		{% if messages %}
 	    			{% for category, message in messages %}
