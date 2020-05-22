@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
+	<script src="https://d3js.org/d3.v4.js"></script>
 	<h1>Home</h1>
 	<br>
 	<h3>Overall Appliances Sentiment ScatterPlot</h3>
 	<img src="{{image_file}}">
+	<h3>WordCloud Using Map-Reduce</h3>
+	<img src="{{image_file_2}}"height="300" width="650">
 	<br>
 	<div class="container-fluid">
 		<div class="row">
@@ -16,6 +19,14 @@
 				<div id="chartdiv2"></div>
 			</div>
 		</div>
+	</div>
+	<div>
+		<h3>Brand Wise Distribution</h3>
+		<div id="brandtree"></div>
+	</div>
+	<div>
+		<h3>Category Wise Distribution</h3>
+		<div id="categoryTree"></div>
 	</div>
 	
 	<!-- Styles -->
@@ -143,6 +154,128 @@
 	series.columns.template.column3D.strokeOpacity = 0.2;
 
 	}); // end am4core.ready()
+	</script>
+
+	<script>
+
+	// set the dimensions and margins of the graph
+	var margin = {top: 10, right: 10, bottom: 10, left: 10},
+	  width = 1000 - margin.left - margin.right,
+	  height = 600 - margin.top - margin.bottom;
+
+	// append the svg object to the body of the page
+	var svg = d3.select("#brandtree")
+	.append("svg")
+	  .attr("width", width + margin.left + margin.right)
+	  .attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	  .attr("transform",
+	        "translate(" + margin.left + "," + margin.top + ")");
+
+	// Read data
+	d3.csv('{{ csv_file }}', function(data) {
+
+	  // stratify the data: reformatting for d3.js
+	  var root = d3.stratify()
+	    .id(function(d) { return d.name; })   // Name of the entity (column name is name in csv)
+	    .parentId(function(d) { return d.parent; })   // Name of the parent (column name is parent in csv)
+	    (data);
+	  root.sum(function(d) { return +d.value })   // Compute the numeric value for each entity
+
+	  // Then d3.treemap computes the position of each element of the hierarchy
+	  // The coordinates are added to the root object above
+	  d3.treemap()
+	    .size([width, height])
+	    .padding(4)
+	    (root)
+
+	console.log(root.leaves())
+	  // use this information to add rectangles:
+	  svg
+	    .selectAll("rect")
+	    .data(root.leaves())
+	    .enter()
+	    .append("rect")
+	      .attr('x', function (d) { return d.x0; })
+	      .attr('y', function (d) { return d.y0; })
+	      .attr('width', function (d) { return d.x1 - d.x0; })
+	      .attr('height', function (d) { return d.y1 - d.y0; })
+	      .style("stroke", "black")
+	      .style("fill", "#5f788a");
+
+	  // and to add the text labels
+	  svg
+	    .selectAll("text")
+	    .data(root.leaves())
+	    .enter()
+	    .append("text")
+	      .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
+	      .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+	      .text(function(d){ return d.data.name})
+	      .attr("font-size", "15px")
+	      .attr("fill", "white")
+	})
+	</script>
+
+	<script>
+
+		// set the dimensions and margins of the graph
+	var margin = {top: 10, right: 10, bottom: 10, left: 10},
+	  width = 1000 - margin.left - margin.right,
+	  height = 600 - margin.top - margin.bottom;
+
+	// append the svg object to the body of the page
+	var svg_2 = d3.select("#categoryTree")
+	.append("svg")
+	  .attr("width", width + margin.left + margin.right)
+	  .attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	  .attr("transform",
+	        "translate(" + margin.left + "," + margin.top + ")");
+
+	// Read data
+	d3.csv('{{csv_file_2}}', function(data) {
+
+	  // stratify the data: reformatting for d3.js
+	  var root = d3.stratify()
+	    .id(function(d) { return d.name; })   // Name of the entity (column name is name in csv)
+	    .parentId(function(d) { return d.parent; })   // Name of the parent (column name is parent in csv)
+	    (data);
+	  root.sum(function(d) { return +d.value })   // Compute the numeric value for each entity
+
+	  // Then d3.treemap computes the position of each element of the hierarchy
+	  // The coordinates are added to the root object above
+	  d3.treemap()
+	    .size([width, height])
+	    .padding(4)
+	    (root)
+
+	console.log(root.leaves())
+	  // use this information to add rectangles:
+	  svg_2
+	    .selectAll("rect")
+	    .data(root.leaves())
+	    .enter()
+	    .append("rect")
+	      .attr('x', function (d) { return d.x0; })
+	      .attr('y', function (d) { return d.y0; })
+	      .attr('width', function (d) { return d.x1 - d.x0; })
+	      .attr('height', function (d) { return d.y1 - d.y0; })
+	      .style("stroke", "black")
+	      .style("fill", "#ccccff");
+
+	  // and to add the text labels
+	  svg_2
+	    .selectAll("text")
+	    .data(root.leaves())
+	    .enter()
+	    .append("text")
+	      .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
+	      .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+	      .text(function(d){ return d.data.name})
+	      .attr("font-size", "15px")
+	      .attr("fill", "black")
+	})
 	</script>
 
 {% endblock content %}

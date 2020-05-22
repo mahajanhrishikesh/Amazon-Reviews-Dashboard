@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h2>Add a Product</h2>
+	<div class='content-section'>
+		<form method='POST' action=''>
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Product Details</legend>
+				<div class="form-group">
+					{{ form.asin.label(class='form-control-label') }}
+					{% if form.asin.errors %}
+					{{ form.asin(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.asin.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.asin(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.name.label(class='form-control-label') }}
+					{% if form.name.errors %}
+					{{ form.name(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.name.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.name(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.customer_rating.label(class='form-control-label') }}
+					{% if form.customer_rating.errors %}
+					{{ form.customer_rating(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.customer_rating.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.customer_rating(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.price.label(class='form-control-label') }}
+					{% if form.price.errors %}
+					{{ form.price(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.price.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.price(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.shipping.label(class='form-control-label') }}
+					{% if form.shipping.errors %}
+					{{ form.shipping(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.shipping.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.shipping(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.sold_by.label(class='form-control-label') }}
+					{% if form.sold_by.errors %}
+					{{ form.sold_by(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.sold_by.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.sold_by(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.color.label(class='form-control-label') }}
+					{% if form.color.errors %}
+					{{ form.color(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.color.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.color(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-info") }}
+			</div>
+		</form>
+	</div>
+{% endblock content %}

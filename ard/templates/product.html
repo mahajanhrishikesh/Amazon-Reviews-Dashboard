@@ -1,22 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
+
 	<article class="media content-section">
 	  <div class="media-body">
 	    <div class="article-metadata">
 	      <a class="mr-2" href="#">{{ product['main_cat'] }}</a>
 	      <small class="text-muted">{{ product['date'] }}</small>
 	    </div>
-	    <h2><a class="article-title" href="/home/{{product['asin']}}">{{ product['title'] }}</a></h2>
-	    {% if product['image'] %}
-			<img src="{{product['image'][0]}}" height="100" width="100">
+	    <h2><a class="article-title" href="/home/{{product['asin']}}">
+	    {{ product['title'] }}
+	    {% if product['title'] %}
+			{{product['title']}}
 		{% else %}
-			<small>No Images</small>
+			{{product['name']}}
 		{% endif %}
+		</a></h2>
+	    <div class="row">
+	    	<div class="col-md-6">
+	    		{% if product['image'] %}
+				<img src="{{product['image'][0]}}" height="100" width="100">
+				{% else %}
+					<small>No Images</small>
+				{% endif %}
+	    	</div>
+		    <div class="col-md-6">
+		    	<a class="btn btn-outline-info" href="/comments/{{product['asin']}}">Add Comment</a>
+		    	<a class="btn btn-outline-info" href="/delete/{{product['asin']}}">Delete Product</a>
+		    	<a class="btn btn-outline-info" href="/update/{{product['asin']}}">Update Product</a>
+		    </div>
+		</div>
 	    <p class="article-content">{{ product['price'] }}</p>
 	    <p class="article-content">{{ product['description'] }}</p>
 	    <ul>
 	    	{% for feature in features %}
 	    		<li>{{feature}}</li>
+	    	{% endfor %}
+		</ul>
+		<h3>Comments</h3>
+		<ul>
+	    	{% for review in reviews %}
+	    		<li>
+	    			<h4>{{review['reviewerName']}}</h4>
+	    			<hr>
+	    			{{review['reviewText']}}
+	    		</li>
 	    	{% endfor %}
 		</ul>
 	  </div>

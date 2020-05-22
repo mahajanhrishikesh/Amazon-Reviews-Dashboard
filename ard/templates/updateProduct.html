@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h2>Update Product</h2>
+	<div class='content-section'>
+		<form method='POST' action=''>
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Enter Updated Field Details</legend>
+				<div class="form-group">
+					{{ form.fieldname.label(class='form-control-label') }}
+					{% if form.fieldname.errors %}
+					{{ form.fieldname(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.fieldname.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.fieldname(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.fieldvalue.label(class='form-control-label') }}
+					{% if form.fieldvalue.errors %}
+					{{ form.fieldvalue(class='form-control form-control-lg is-invalid') }}
+					<div class="invalid-feedback">
+						{% for error in form.fieldvalue.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.fieldvalue(class='form-control form-control-lg') }}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-info") }}
+			</div>
+		</form>
+	</div>
+{% endblock content %}

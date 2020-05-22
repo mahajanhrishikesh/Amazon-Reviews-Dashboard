@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+	<div>
+		<h3>Create New Product</h3>
+		<a href="{{ url_for('addProduct') }}" class="btn btn-outline-info"> Add Product </a>
+	</div>
+	<br>
+
 	{% for product in prods %}
 	<article class="media content-section">
 	  <div class="media-body">
